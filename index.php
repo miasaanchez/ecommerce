@@ -1,17 +1,19 @@
 <?php 
+require_once("vendor/autoload.php"); //Carrega o autoload
 
-require_once("vendor/autoload.php");
+$app = new \Slim\Slim(); //Configuração Slim
 
-$app = new \Slim\Slim();
+$app->config('debug', true); //Ativa o modo debug
 
-$app->config('debug', true);
-
+/** Rota principal com / **/
 $app->get('/', function() {
-    
-	echo "OK";
+	$sql = new Hcode\DB\Sql();
 
+	$results = $sql->select("SELECT * FROM tb_users");
+
+	echo json_encode($results);
 });
 
-$app->run();
+$app->run(); //Executa
 
  ?>
